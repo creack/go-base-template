@@ -85,7 +85,7 @@ linters-settings:
     lines:      160
     statements: 70
   goimports:
-    local-prefixes: []
+    local-prefixes: "github.com/creack"
 
 linters:
   disable-all: true
