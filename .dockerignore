@@ -1,0 +1,2 @@
+# Always ignore everything and explicitly whitelist what is needed in docker.
+*

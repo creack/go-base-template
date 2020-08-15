@@ -1,0 +1,165 @@
+# MIT License
+#
+# Copyright (c) 2020 Guillaume J. Charmes <git@charmes.net>
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+run:
+  deadline: 1m
+
+  # Include test files.
+  tests: true
+
+  skip-dirs:
+    # Placeholder.
+    - ./docs
+
+  skip-files:
+    - ./docs.go
+
+output:
+  # colored-line-number|line-number|json|tab|checkstyle|code-climate, default is "colored-line-number".
+  format:             colored-line-number
+  print-issued-lines: true
+  print-linter-name:  true
+
+linters-settings:
+  gofmt:
+    simplify: true
+  gocyclo:
+    min-complexity: 15
+  maligned:
+    suggest-new: true
+  dupl:
+    threshold: 150
+  goconst:
+    min-len: 3
+    min-occurrences: 5
+  misspell:
+    locale: US
+    ignore-words:
+      # Used for Create() interfaces. Not a typo for Creature.
+      - Creature
+      - Creater
+      - creature
+      - creater
+  lll:
+    line-length: 180
+    tab-width:   8
+  unused:
+    check-exported: false
+  unparam:
+    check-exported: true
+  nakedret:
+    max-func-lines: 30
+  gocritic:
+    # Enable multiple checks by tags, run `GL_DEBUG=gocritic golangci-lint` run to see all tags and checks.
+    # Empty list by default. See https://github.com/go-critic/go-critic#usage -> section "Tags".
+    enabled-tags:
+      - diagnostic
+      - style
+      - opinionated
+      - performance
+    disabled-checks:
+      - hugeParam # Disabled for now. Very strict.
+    settings:
+      rangeValCopy:
+        sizeThreshold: 1024 # Increase the allowed copied bytes in range.
+  funlen:
+    lines:      160
+    statements: 70
+  goimports:
+    local-prefixes: []
+
+linters:
+  disable-all: true
+  # NOTE: enable-all is deprecated because too  many people don't pin versions...
+  # We still require explicit documentation on why some linters are disabled.
+  # disable:
+  #   - depguard # Go linter that checks if package imports are in a list of acceptable packages [fast: true, auto-fix: false]
+  #   - godox    # Tool for detection of FIXME, TODO and other comment keywords [fast: true, auto-fix: false]
+  #   - gomnd    # An analyzer to detect magic numbers. [fast: true, auto-fix: false]
+  #   - wsl      # Whitespace Linter - Forces you to use empty lines! [fast: true, auto-fix: false]
+  # disable-reasons:
+  #   - depguard # Checks whitelisted/blacklisted import path, but runs way too slow. Not that useful.
+  #   - godox    # Don't fail when finding TODO, FIXME, etc.
+  #   - gomnd    # Checks for magic numbers. Disabled due to too many false positives not configurable (03/01/2020 v1.23.7).
+  #   - wsl      # Forces to add newlines around blocks. Lots of false positives, not that useful.
+  enable:
+    - bodyclose        # checks whether HTTP response body is closed successfully [fast: true, auto-fix: false]
+    - deadcode         # Finds unused code [fast: true, auto-fix: false]
+    - dogsled          # Checks assignments with too many blank identifiers (e.g. x, _, _, _, := f()) [fast: true, auto-fix: false]
+    - dupl             # Tool for code clone detection [fast: true, auto-fix: false]
+    - errcheck         # Errcheck is a program for checking for unchecked errors in go programs. These unchecked errors can be critical bugs in some cases [fast: true, auto-fix: false]
+    - funlen           # Tool for detection of long functions [fast: true, auto-fix: false]
+    - gochecknoglobals # Checks that no globals are present in Go code [fast: true, auto-fix: false]
+    - gochecknoinits   # Checks that no init functions are present in Go code [fast: true, auto-fix: false]
+    - gocognit         # Computes and checks the cognitive complexity of functions [fast: true, auto-fix: false]
+    - goconst          # Finds repeated strings that could be replaced by a constant [fast: true, auto-fix: false]
+    - gocritic         # The most opinionated Go source code linter [fast: true, auto-fix: false]
+    - gocyclo          # Computes and checks the cyclomatic complexity of functions [fast: true, auto-fix: false]
+    - gofmt            # Gofmt checks whether code was gofmt-ed. By default this tool runs with -s option to check for code simplification [fast: true, auto-fix: true]
+    - goimports        # Goimports does everything that gofmt does. Additionally it checks unused imports [fast: true, auto-fix: true]
+    - golint           # Golint differs from gofmt. Gofmt reformats Go source code, whereas golint prints out style mistakes [fast: true, auto-fix: false]
+    - goprintffuncname # Checks that printf-like functions are named with `f` at the end [fast: true, auto-fix: false]
+    - gosec            # (gas): Inspects source code for security problems [fast: true, auto-fix: false]
+    - gosimple         # (megacheck): Linter for Go source code that specializes in simplifying a code [fast: true, auto-fix: false]
+    - govet            # (vet, vetshadow): Vet examines Go source code and reports suspicious constructs, such as Printf calls whose arguments do not align with the format string [fast: true, auto-fix: false]
+    - ineffassign      # Detects when assignments to existing variables are not used [fast: true, auto-fix: false]
+    - interfacer       # Linter that suggests narrower interface types [fast: true, auto-fix: false]
+    - lll              # Reports long lines [fast: true, auto-fix: false]
+    - maligned         # Tool to detect Go structs that would take less memory if their fields were sorted [fast: true, auto-fix: false]
+    - misspell         # Finds commonly misspelled English words in comments [fast: true, auto-fix: true]
+    - nakedret         # Finds naked returns in functions greater than a specified function length [fast: true, auto-fix: false]
+    - prealloc         # Finds slice declarations that could potentially be preallocated [fast: true, auto-fix: false]
+    - rowserrcheck     # checks whether Err of rows is checked successfully [fast: true, auto-fix: false]
+    - scopelint        # Scopelint checks for unpinned variables in go programs [fast: true, auto-fix: false]
+    - staticcheck      # (megacheck): Staticcheck is a go vet on steroids, applying a ton of static analysis checks [fast: true, auto-fix: false]
+    - structcheck      # Finds unused struct fields [fast: true, auto-fix: false]
+    - stylecheck       # Stylecheck is a replacement for golint [fast: true, auto-fix: false]
+    - typecheck        # Like the front-end of a Go compiler, parses and type-checks Go code [fast: true, auto-fix: false]
+    - unconvert        # Remove unnecessary type conversions [fast: true, auto-fix: false]
+    - unparam          # Reports unused function parameters [fast: true, auto-fix: false]
+    - unused           # (megacheck): Checks Go code for unused constants, variables, functions and types [fast: false, auto-fix: false]
+    - varcheck         # Finds unused global variables and constants [fast: true, auto-fix: false]
+    - whitespace       # Tool for detection of leading and trailing whitespace [fast: true, auto-fix: true]
+
+issues:
+  exclude:
+    # Allow shadowing of the testify/suite package as it is recommended by the package.
+    - "shadow of imported from 'github.com/stretchr/testify/suite' package 'suite'"
+    # Don't error out when a Closer returns nil.
+    # Lot of closers can't fail but still return error to comply with io.Closer.
+    - 'Close - result 0 \(error\) is always nil'
+  # Maximum issues count per one linter. Set to 0 to disable. Default is 50.
+  max-per-linter: 10
+  # Disable default excludes. Always be explicit on what we exclude.
+  exclude-use-default: false
+  # Exclude some linters from running on tests files.
+  exclude-rules:
+    - path: '_test\.go' # Be more flexible with test files.
+      linters:
+        - gochecknoglobals # Lots of globals in tests.
+        - gochecknoinits   # Lots of init() in tests.
+        - goconst          # Lots of repeated strigns in tests.
+        - funlen           # Tests fcts are expected to be long when using t.Run.
+    - path: 'wire\.go' # Special case, we expect globals in wire files.
+      linters:
+        - gochecknoglobals # Wire is expected to provide global sets/
+        - interfacer       # Wire is base on type names. All interfacer error are false positive here.

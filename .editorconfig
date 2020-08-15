@@ -1,0 +1,26 @@
+# EditorConfig is awesome: http://EditorConfig.org.
+
+[*]
+end_of_line              = lf
+insert_final_newline     = true
+charset                  = utf-8
+trim_trailing_whitespace = true
+max_line_length          = 180
+indent_style             = space
+indent_size              = 2
+
+[*.md]
+max_line_length          = 0     # Don't check line lenghts in files.
+trim_trailing_whitespace = false # Don't remove trailing spaces as it can be required.
+
+[{Makefile,*.mk}]
+indent_style = tab
+indent_size  = 8
+
+[{Dockerfile,Dockerfile.*}]
+indent_style = space
+indent_size  = 4
+
+[*.go]
+indent_style = tab
+indent_size  = 8

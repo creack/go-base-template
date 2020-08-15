@@ -1,0 +1,7 @@
+# Auto detect text files and perform LF normalization.
+* text=auto
+
+# Hide vendor files from diffs.
+vendor/* linguist-vendored
+*/vendor/* linguist-vendored
+go.sum linguist-generated
